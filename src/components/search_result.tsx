@@ -60,6 +60,25 @@ export class SearchResult extends React.Component<Props> {
             })}</span>
           </div>
         </div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}>
+          <a href={`https://modrinth.com/${project.project_type}/${project.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`View on Modrinth`}
+            style={{
+              color: 'inherit',
+              border: '1px solid rgba(0, 0, 0, 0.3)',
+              borderRadius: '10rem',
+              lineHeight: '1rem',
+              padding: '0.25rem',
+            }}>
+            <span className="material-symbols-outlined">open_in_browser</span>
+          </a>
+        </div>
       </div>
     );
   }
