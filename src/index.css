@@ -8,14 +8,14 @@ body {
   margin: 0;
 }
 
-.search-result {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
+.button {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: var(--data-color, inherit);
+  background-color: var(--data-background, transparent);
 }
 
-.search-result:hover {
-  background-color: rgba(0, 0, 0, 0.15);
-  cursor: pointer;
+.button:hover {
   box-shadow: 0 4px 2px rgba(0, 0, 0, 0.3);
+  color: var(--data-hover-color, inherit);
+  background-color: var(--data-hover-background, transparent);
 }
