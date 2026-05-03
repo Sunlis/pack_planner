@@ -18,8 +18,8 @@ type ModSearchResponse = {
   total_hits: number;
 };
 
-export function searchMods(query: string): Promise<ModSearchResponse> {
-  return fetchData<ModSearchResponse>(`/search?query=${encodeURIComponent(query)}`);
+export function searchMods(query: string, sort: string = 'relevance'): Promise<ModSearchResponse> {
+  return fetchData<ModSearchResponse>(`/search?query=${encodeURIComponent(query)}&index=${encodeURIComponent(sort)}&facets=[["project_type:mod"]]`);
 }
 
 export function getMod(idOrSlug: string): Promise<ProjectGet> {

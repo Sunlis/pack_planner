@@ -2,7 +2,8 @@ import React from "react";
 import { OpenInBrowser, AddBox } from 'google-material-icons/outlined';
 
 import { ProjectHit } from "../api/types";
-import { BUTTON_STYLE } from "../style";
+import { BUTTON_STYLE, HOLLOW_PILL_STYLE, PILL_STYLE } from "../style";
+import { formatNumber } from "../format";
 
 const MAX_VERSIONS_TO_SHOW = 5;
 
@@ -56,21 +57,43 @@ export class SearchResult extends React.Component<Props> {
             <span style={{
               fontSize: '0.9rem',
             }}>{project.description}</span>
-            <div>
+            <div style={{
+              margin: '0.25rem 0 0.75rem 0',
+            }}>
               <span style={{
                 fontSize: '0.7rem',
               }}>Versions: {versions.map((version, index) => {
                 return (
                   <span key={index}
                     style={{
-                      border: '1px solid rgba(0, 0, 0, 0.3)',
-                      borderRadius: '10rem',
-                      padding: '0.1rem 0.3rem',
+                      ...HOLLOW_PILL_STYLE,
                       marginRight: '0.3rem',
                     }}
                   >{version}</span>
                 );
               })}</span>
+            </div>
+            <div style={{
+              fontSize: '0.7rem',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '0.5rem',
+            }}>
+              <span style={{
+                ...PILL_STYLE,
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                borderColor: 'transparent',
+              }}>Last updated: {new Date(project.date_modified).toLocaleDateString('en-CA')}</span>
+              <span style={{
+                ...PILL_STYLE,
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                borderColor: 'transparent',
+              }}>{formatNumber(project.downloads)} downloads</span>
+              <span style={{
+                ...PILL_STYLE,
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                borderColor: 'transparent',
+              }}>{formatNumber(project.follows)} follows</span>
             </div>
           </div>
         </div>
