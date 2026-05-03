@@ -1,4 +1,6 @@
 import React from "react";
+import { OpenInBrowser } from 'google-material-icons/outlined';
+
 import { ProjectHit } from "../api/types";
 
 const MAX_VERSIONS_TO_SHOW = 5;
@@ -76,7 +78,7 @@ export class SearchResult extends React.Component<Props> {
               lineHeight: '1rem',
               padding: '0.25rem',
             }}>
-            <span className="material-symbols-outlined">open_in_browser</span>
+            <OpenInBrowser />
           </a>
         </div>
       </div>

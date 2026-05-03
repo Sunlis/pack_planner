@@ -13,6 +13,7 @@
   "author": "seandohring@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "google-material-icons": "^2.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
