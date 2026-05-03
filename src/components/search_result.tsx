@@ -28,6 +28,7 @@ export class SearchResult extends React.Component<Props> {
             height: '4rem',
             alignSelf: 'center',
             marginRight: '1rem',
+            borderRadius: '1rem',
           }}
         />
         <div style={{
