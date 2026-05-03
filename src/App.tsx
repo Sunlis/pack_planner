@@ -7,7 +7,9 @@ export class App extends React.Component {
   render() {
 
     return (
-      <div>
+      <div style={{
+        margin: '1rem'
+      }}>
         <h1>Pack Planner</h1>
         <SearchPage />
       </div>
