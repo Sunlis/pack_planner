@@ -35,8 +35,12 @@ export class App extends React.Component<Props, State> {
           page={this.state.page}
           onPageChange={(page) => this.setState({ page })}
         />
-        {this.state.page === Page.PACK ? <PackPage /> : null}
-        {this.state.page === Page.SEARCH ? <SearchPage /> : null}
+        <PackPage style={{
+          display: this.state.page === Page.PACK ? 'flex' : 'none',
+        }} />
+        <SearchPage style={{
+          display: this.state.page === Page.SEARCH ? 'flex' : 'none',
+        }} />
       </div>
     );
   }

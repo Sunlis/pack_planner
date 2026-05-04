@@ -3,7 +3,9 @@ import { ProjectHit } from "../api/types";
 import { SearchResult } from "./search_result";
 import { searchMods } from "../api/client";
 
-type Props = {};
+type Props = {
+  style: React.CSSProperties;
+};
 
 type State = {
   query: string;
@@ -52,6 +54,7 @@ export class SearchPage extends React.Component<Props, State> {
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
+        ...this.props.style,
       }}>
         <div style={{
           display: 'flex',

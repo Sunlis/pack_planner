@@ -1,10 +1,13 @@
 import deepMerge, { DeepPartial } from "./deep";
+import { Pack } from "./types";
 
 export type AppState = {
+  pack: Pack;
 };
 export type Listener = (state: AppState) => void;
 
 let state: AppState = {
+  pack: { mods: [] },
 };
 
 let allowUpdates = true;

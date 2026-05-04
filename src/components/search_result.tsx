@@ -1,9 +1,11 @@
 import React from "react";
-import { OpenInBrowser, AddBox } from 'google-material-icons/outlined';
+import { OpenInBrowser, AddBox, IndeterminateCheckBox } from 'google-material-icons/outlined';
 
 import { ProjectHit } from "../api/types";
 import { BUTTON_STYLE, HOLLOW_PILL_STYLE, PILL_STYLE } from "../style";
 import { formatNumber } from "../format";
+import * as appState from "../store";
+import { getMod } from "../api/client";
 
 const MAX_VERSIONS_TO_SHOW = 5;
 
@@ -11,13 +13,29 @@ type Props = {
   project: ProjectHit;
 };
 
-export class SearchResult extends React.Component<Props> {
+type State = {
+  appState: appState.AppState;
+};
+
+export class SearchResult extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      appState: appState.getState(),
+    };
+    appState.listen((state) => {
+      this.setState({ appState: state });
+    });
+  }
+
   render() {
     const { project } = this.props;
     let versions: string[] = project.versions.reverse();
     if (versions.length > MAX_VERSIONS_TO_SHOW) {
       versions = versions.slice(0, MAX_VERSIONS_TO_SHOW).concat([`+ ${project.versions.length - MAX_VERSIONS_TO_SHOW} more`]);
     }
+    const inPack = this.state.appState.pack.mods.some(mod => mod.slug === project.slug);
+    let loading = false;
     return (
       <div style={{
         display: 'flex',
@@ -86,19 +104,71 @@ export class SearchResult extends React.Component<Props> {
           </div>
         </div>
 
-        <div className="button"
-          style={{
-            ...BUTTON_STYLE,
-            '--data-hover-background': 'rgba(75, 138, 186, 0.8)',
-            '--data-background': 'rgba(75, 138, 186, 0.3)',
-            '--data-color': '#000',
-            '--data-hover-color': '#fff',
-            cursor: 'pointer',
-          } as React.CSSProperties}
-        >
-          <AddBox size={32} />
-          <span>Add to<br />Pack</span>
-        </div>
+        {!inPack ? (
+          <div className="button"
+            style={{
+              ...BUTTON_STYLE,
+              '--data-hover-background': 'rgba(75, 138, 186, 0.8)',
+              '--data-background': 'rgba(75, 138, 186, 0.3)',
+              '--data-color': '#000',
+              '--data-hover-color': '#fff',
+              cursor: loading ? 'not-allowed' : 'pointer',
+            } as React.CSSProperties}
+            onClick={async () => {
+              if (inPack) {
+                return;
+              }
+              loading = true;
+              const modDetail = await getMod(project.slug);
+              loading = false;
+              const mods = appState.getState().pack.mods;
+              mods.push({
+                slug: project.slug,
+                loaders: modDetail.loaders,
+                game_versions: modDetail.game_versions,
+              });
+              appState.update({
+                pack: {
+                  mods,
+                },
+              });
+            }}
+          >
+            <AddBox size={32} />
+            <span>Add to<br />Pack</span>
+          </div>
+        ) : null}
+
+        {inPack ? (
+          <div className="button"
+            style={{
+              ...BUTTON_STYLE,
+              '--data-hover-background': 'rgba(186, 95, 75, 0.8)',
+              '--data-background': 'rgba(186, 105, 75, 0.3)',
+              '--data-color': '#000',
+              '--data-hover-color': '#fff',
+              cursor: 'pointer',
+            } as React.CSSProperties}
+            onClick={async () => {
+              if (!inPack) {
+                return;
+              }
+              const mods = appState.getState().pack.mods;
+              const modIndex = mods.findIndex(mod => mod.slug === project.slug);
+              if (modIndex !== -1) {
+                mods.splice(modIndex, 1);
+              }
+              appState.update({
+                pack: {
+                  mods,
+                },
+              });
+            }}
+          >
+            <IndeterminateCheckBox size={32} />
+            <span>Remove<br />from Pack</span>
+          </div>
+        ) : null}
 
         <a href={`https://modrinth.com/${project.project_type}/${project.slug}`}
           target="_blank"
