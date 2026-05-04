@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pack } from '../types';
 import { getState, listen } from '../store';
+import { PackItem } from './pack_item';
 
 type Props = {
   style: React.CSSProperties;
@@ -32,9 +33,7 @@ export class PackPage extends React.Component<Props, State> {
         <span>{this.state.pack.mods.length} mods in pack</span>
         {
           this.state.pack.mods.map(mod => (
-            <div key={mod.slug}>
-              {mod.slug}
-            </div>
+            <PackItem key={mod.slug} mod={mod} />
           ))
         }
       </div>
