@@ -79,21 +79,9 @@ export class SearchResult extends React.Component<Props> {
               flexDirection: 'row',
               gap: '0.5rem',
             }}>
-              <span style={{
-                ...PILL_STYLE,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                borderColor: 'transparent',
-              }}>Last updated: {new Date(project.date_modified).toLocaleDateString('en-CA')}</span>
-              <span style={{
-                ...PILL_STYLE,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                borderColor: 'transparent',
-              }}>{formatNumber(project.downloads)} downloads</span>
-              <span style={{
-                ...PILL_STYLE,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                borderColor: 'transparent',
-              }}>{formatNumber(project.follows)} follows</span>
+              <span style={PILL_STYLE}>Last updated: {new Date(project.date_modified).toLocaleDateString('en-CA')}</span>
+              <span style={PILL_STYLE}>{formatNumber(project.downloads)} downloads</span>
+              <span style={PILL_STYLE}>{formatNumber(project.follows)} follows</span>
             </div>
           </div>
         </div>
